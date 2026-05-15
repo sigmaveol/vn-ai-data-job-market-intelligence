@@ -1,204 +1,92 @@
 # Job Market Intelligence & Resume Matching System
-## AI/Data Careers in Vietnam 2025-2026
+**Phân tích Thị trường AI/Data Việt Nam 2026**
 
-A Data Analysis and Visualization project focused on the Vietnamese AI/Data recruitment market, business intelligence dashboards, and lightweight resume-job matching.
+> Môn học: Phân tích Dữ liệu và Trực quan hóa (505067) — Trường Đại học Tôn Đức Thắng  
+> Nhóm: Hoàng Sinh Hưng (52300106) · Trần Thiên Hưng (52300109) · HK2, 2025–2026
 
----
-
-# Features
-
-## Job Market Intelligence
-- AI/Data hiring trends
-- Salary analytics
-- Skill demand analysis
-- Company hiring analysis
-- Geographic hiring distribution
-
-## NLP Job Description Mining
-- Rule-based skill extraction
-- TF-IDF keyword extraction
-- Skill co-occurrence analysis
-- Company-skill analysis
-
-## Resume Analyzer
-- CV parsing for PDF/DOCX/TXT
-- Resume to JD matching
-- ATS keyword analysis
-- Missing skill detection
-- Explainable resume scoring
-
-## Production Platform Enhancements
-- OAuth-ready authentication
-- Role-based access control
-- Deployment configuration for Streamlit Cloud and Render
+**🌐 Dashboard trực tuyến:**
+[https://vn-ai-data-job-market-intelligence-qtagmjab5appvhhgqqphbke.streamlit.app](https://vn-ai-data-job-market-intelligence-qtagmjab5appvhhgqqphbke.streamlit.app)
 
 ---
 
-# Tech Stack
+## Giới thiệu
 
-## Data Processing
-- Pandas
-- NumPy
+Đề tài thu thập và phân tích **7.051 tin tuyển dụng** trong lĩnh vực AI và Khoa học Dữ liệu tại Việt Nam từ 6 nền tảng lớn (123job, VietnamWorks, ITviec, TopDev, TopCV, CareerViet) trong giai đoạn tháng 1–5/2026. Sản phẩm gồm:
 
-## Visualization
-- Plotly
-- Matplotlib
-- Seaborn
-
-## NLP & Matching
-- scikit-learn
-- Rule-based skill dictionaries
-- Lightweight deterministic scoring
-
-## Dashboard
-- Streamlit
-- Static HTML dashboard
-
-## Production & Automation
-- python-dotenv
-- Streamlit Secrets
-- OAuth via Google/GitHub
-- Render/Streamlit Cloud deployment configs
+- **Dashboard Streamlit** — 8 trang phân tích tương tác với bộ lọc đồng bộ
+- **Hệ thống đối chiếu hồ sơ** — tải lên CV, nhận điểm tương thích và gợi ý cải thiện
+- **Báo cáo học thuật** — 8 chương, ~60 trang, kèm 16 biểu đồ
+- **Slide thuyết trình** — 24 trang
 
 ---
 
-# Project Structure
+## Kết quả nổi bật
 
-```text
-Project/
-|-- data/
-|-- notebooks/
-|-- src/
-|   |-- analysis/
-|   |-- auth/
-|   |-- crawler/
-|   |-- nlp/
-|   |-- platform/
-|   |-- preprocessing/
-|   `-- resume_analyzer/
-|-- pages/
-|-- utils/
-|-- outputs/
-|-- app.py
-|-- PROJECT_CONTEXT.md
-|-- PLANNING.md
-|-- TASK.md
-|-- DEPLOYMENT.md
-|-- README.md
-`-- requirements.txt
-```
+| Chỉ số | Giá trị |
+|---|---|
+| Tổng tin tuyển dụng | 7.051 (từ 3.496 doanh nghiệp) |
+| Lương trung vị | 980 USD/tháng (~25 triệu VND) |
+| Tỷ lệ công bố lương | 42% |
+| Kỹ năng dẫn đầu | Python (1.282 tin) · SQL (1.199 tin) |
+| Thị trường tập trung | Hà Nội 46% · TP.HCM 38% |
+| Lương cao nhất | MLOps/DevOps · Cloud Engineer (>1.200 USD) |
 
 ---
 
-# Setup
+## Cài đặt và chạy
 
-## Create virtual environment
-
-```bash
-python -m venv .venv
-```
-
-## Activate environment
-
-Windows:
+**Yêu cầu:** Python 3.9+
 
 ```bash
-.venv\Scripts\activate
-```
-
-Linux/Mac:
-
-```bash
-source .venv/bin/activate
-```
-
-## Install dependencies
-
-Production dashboard:
-
-```bash
+# 1. Cài thư viện
 pip install -r requirements.txt
-```
 
-Full local development/crawling/notebook environment:
-
-```bash
-pip install -r requirements-full.txt
-```
-
----
-
-# Run Dashboard
-
-```bash
+# 2. Chạy dashboard
 streamlit run app.py
 ```
 
-## Production Configuration
+Mở trình duyệt tại `http://localhost:8501`
 
-Use the existing `.env` file for local production-style settings. The runtime loads this file directly.
+---
 
-Important variables:
+## Cấu trúc dự án
 
-```text
-AUTH_ENABLED=false
-APP_BASE_URL=http://localhost:8501
-GOOGLE_OAUTH_CLIENT_ID=
-GOOGLE_OAUTH_CLIENT_SECRET=
-USER_ROLE_MAP={"admin@example.com":"admin","analyst@example.com":"analyst"}
 ```
-
-For Streamlit Cloud, use `.streamlit/secrets.example.toml` as the template and store real secrets in the platform secret manager. See `DEPLOYMENT.md` for Streamlit Cloud and Render deployment steps.
-
-Vietnamese quickstart:
-
-```text
-DEPLOYMENT_QUICKSTART_VI.md
+Project/
+├── app.py                       # Entry point — trang Tổng quan
+├── pages/                       # 8 trang phân tích
+│   ├── 1_Salary.py              # Phân tích lương
+│   ├── 2_Skills.py              # Phân tích kỹ năng
+│   ├── 3_Company.py             # Phân tích công ty
+│   ├── 4_Geographic.py          # Phân tích địa lý
+│   ├── 5_Timeseries.py          # Xu hướng tuyển dụng
+│   ├── 6_Resume.py              # Đối chiếu hồ sơ ứng viên
+│   ├── 7_About.py               # Thông tin đề tài
+│   └── 8_Export.py              # Xuất dữ liệu
+├── utils/                       # Tiện ích dùng chung
+├── src/
+│   ├── crawler/                 # Thu thập dữ liệu 6 nền tảng
+│   ├── preprocessing/           # Làm sạch và chuẩn hóa
+│   ├── nlp/                     # Trích xuất kỹ năng
+│   └── resume_analyzer/         # Đối chiếu hồ sơ ứng viên
+├── data/
+│   └── processed/
+│       └── jobs_processed.parquet   # Bộ dữ liệu chính (7.051 bản ghi)
+├── notebooks/                   # 3 Jupyter Notebook
+├── outputs/
+│   ├── charts/                  # 16 biểu đồ EDA
+│   ├── reports/final_report.docx
+│   └── slides/*.pptx
+└── requirements.txt
 ```
 
 ---
 
-# Run HTML Dashboard
+## Tài liệu
 
-Static HTML dashboard:
-
-```text
-outputs/dashboard/index.html
-```
-
-Recommended local server from `Project/` so the dashboard can load CSV automatically:
-
-```bash
-python -m http.server 8000
-```
-
-Then open:
-
-```text
-http://localhost:8000/outputs/dashboard/index.html
-```
-
----
-
-# Final Deliverables
-
-- Report (.docx/.pdf)
-- Slides (.pptx)
-- Source code
-- Dashboard demo
-- Optional deployed dashboard URL
-- Production deployment guide
-
----
-
-# Language Policy
-
-- Technical documentation: English
-- Academic report/slides: Vietnamese
-- Dashboard explanations: Vietnamese
-
----
-
-# Course
-
-Data Analysis and Visualization
+| File | Mô tả |
+|---|---|
+| `outputs/reports/final_report.docx` | Báo cáo đầy đủ 8 chương |
+| `outputs/slides/*.pptx` | Slide thuyết trình 24 trang |
+| `notebooks/02_eda.ipynb` | Notebook phân tích EDA chính |
+| `notebooks/01_data_collection.ipynb` | Quy trình thu thập dữ liệu |
