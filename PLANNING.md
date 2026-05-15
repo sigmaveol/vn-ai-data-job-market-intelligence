@@ -134,34 +134,3 @@
 ```text
 Ten1MaSV_Ten2MaSV.zip
 ```
-
----
-
-# Current Implementation Notes
-
-The repository has advanced beyond the original phase labels above:
-
-- Phase 4 EDA: implemented through analysis modules, notebooks, exported charts, and business insight outputs.
-- Phase 5 Dashboard: implemented as Streamlit multipage dashboard plus static HTML dashboard.
-- Phase 6 NLP/Resume Analyzer: implemented with lightweight skill extraction, keyword extraction, resume parser, matcher, scoring, and dashboard page.
-- Phase 7 Production Platform: implemented as deployment-ready enhancements, not an enterprise backend.
-
-## Phase 7 Scope
-
-Completed in code:
-- production settings with `.env` and Streamlit Secrets support
-- OAuth-ready login flow for Google and optional GitHub
-- Viewer/Analyst/Admin RBAC
-- protected analyst pages
-- AI Agent automation page
-- reusable automated analytics pipeline
-- deterministic KPI/chart/insight recommendations
-- Render deployment config
-- deployment documentation
-
-External actions still required:
-- create hosting project on Streamlit Cloud/Render
-- add real OAuth credentials in the hosting secret manager
-- set `AUTH_ENABLED=true`
-- test login callback URL on the deployed domain
-- copy the public URL into the final report/slides
