@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VN AI/Data Job Market Dashboard</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --border: #dbe3ef;
+      --text: #0f172a;
+      --muted: #64748b;
+      --blue: #2563eb;
+      --cyan: #0284c7;
+      --green: #059669;
+      --orange: #ea580c;
+      --rose: #e11d48;
+      --purple: #7c3aed;
+      --shadow: 0 16px 40px rgba(15, 23, 42, .08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+    }
+
+    .shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 6px;
+      font-size: 14px;
+    }
+
+    .badge {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .dashboard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 12px;
+      padding: 16px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    select, button {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      padding: 9px 10px;
+      font: inherit;
+      min-height: 38px;
+    }
+
+    button {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .kpi {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      min-height: 96px;
+      background: #fff;
+    }
+
+    .kpi span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .kpi strong {
+      font-size: clamp(20px, 2vw, 28px);
+      line-height: 1.1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.35fr .85fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      padding: 14px;
+      min-width: 0;
+    }
+
+    .panel h2 {
+      font-size: 15px;
+      margin: 0 0 12px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .chart {
+      width: 100%;
+      height: 320px;
+    }
+
+    .chart.short { height: 250px; }
+    .chart.tall { height: 410px; }
+
+    .insights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .insight {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 14px;
+      color: #1e3a8a;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .status {
+      padding: 12px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .bar-label {
+      font-size: 11px;
+      fill: var(--muted);
+    }
+
+    .axis {
+      stroke: #e2e8f0;
+      stroke-width: 1;
+    }
+
+    .empty {
+      padding: 32px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: var(--surface-2);
+    }
+
+    @media (max-width: 1180px) {
+      .filters { grid-template-columns: repeat(3, 1fr); }
+      .kpis { grid-template-columns: repeat(3, 1fr); }
+      .grid, .split { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { padding: 12px; }
+      .topbar { flex-direction: column; }
+      .filters, .kpis, .insights { grid-template-columns: 1fr; }
+      .chart, .chart.tall { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div>
+        <h1>VN AI/Data Job Market Intelligence</h1>
+        <div class="subtitle">Dashboard HTML một khung · dữ liệu tuyển dụng AI/Data Việt Nam · Jan-May 2026</div>
+      </div>
+      <div class="badge">Portfolio BI Dashboard</div>
+    </div>
+
+    <section class="dashboard">
+      <div class="filters">
+        <div>
+          <label for="cityFilter">Thành phố</label>
+          <select id="cityFilter"></select>
+        </div>
+        <div>
+          <label for="roleFilter">Vai trò</label>
+          <select id="roleFilter"></select>
+        </div>
+        <div>
+          <label for="sourceFilter">Nguồn</label>
+          <select id="sourceFilter"></select>
+        </div>
+        <div>
+          <label for="levelFilter">Cấp độ</label>
+          <select id="levelFilter"></select>
+        </div>
+      </div>
+
+      <div class="content">
+        <section class="kpis">
+          <div class="kpi"><span>Tin tuyển dụng</span><strong id="kpiJobs">-</strong></div>
+          <div class="kpi"><span>Doanh nghiệp</span><strong id="kpiCompanies">-</strong></div>
+          <div class="kpi"><span>Tỉnh/TP</span><strong id="kpiCities">-</strong></div>
+          <div class="kpi"><span>Lương trung vị</span><strong id="kpiSalary">-</strong></div>
+          <div class="kpi"><span>Có công bố lương</span><strong id="kpiCoverage">-</strong></div>
+          <div class="kpi"><span>Top kỹ năng</span><strong id="kpiSkill">-</strong></div>
+        </section>
+
+        <section class="grid">
+          <div class="panel">
+            <h2>Demand Map: Vai trò, Thành phố, Kỹ năng</h2>
+            <div class="split">
+              <svg id="roleChart" class="chart"></svg>
+              <svg id="cityChart" class="chart"></svg>
+            </div>
+            <svg id="skillChart" class="chart tall"></svg>
+          </div>
+
+          <div class="panel">
+            <h2>Nguồn tuyển dụng & Salary Signal</h2>
+            <svg id="sourceChart" class="chart short"></svg>
+            <svg id="salaryChart" class="chart short"></svg>
+            <svg id="levelChart" class="chart short"></svg>
+          </div>
+        </section>
+
+        <section class="insights">
+          <div class="insight"><strong>Insight 1.</strong> Nhu cầu tuyển dụng tập trung mạnh ở các vai trò phân tích dữ liệu, kỹ thuật dữ liệu và AI/ML.</div>
+          <div class="insight"><strong>Insight 2.</strong> Hà Nội và TP.HCM vẫn là hai trung tâm tuyển dụng chính, phản ánh mức độ tập trung của hệ sinh thái công nghệ.</div>
+          <div class="insight"><strong>Insight 3.</strong> Python, SQL và các kỹ năng hạ tầng dữ liệu là nhóm năng lực có tính chuyển đổi cao giữa nhiều vai trò.</div>
+        </section>
+      </div>
+
+      <div class="status" id="status">Đang tải dữ liệu từ ../../data/processed/jobs_processed.csv ...</div>
+    </section>
+  </main>
+
+  <script>
+    const CSV_URL = "../../data/processed/jobs_processed.csv";
+    const COLORS = ["#2563eb", "#0284c7", "#059669", "#ea580c", "#7c3aed", "#e11d48", "#0891b2", "#16a34a"];
+    const ROLE_MAP = [
+      ["Data Analyst", ["data analyst", "business intelligence", "bi analyst", "reporting analyst", "phân tích dữ liệu"]],
+      ["Business Analyst", ["business analyst", "system analyst", "systems analyst", "product analyst"]],
+      ["Data Engineer", ["data engineer", "etl engineer", "data pipeline", "data platform", "kỹ sư dữ liệu"]],
+      ["AI/ML Engineer", ["ai engineer", "ml engineer", "machine learning engineer", "deep learning", "nlp engineer", "computer vision engineer", "artificial intelligence"]],
+      ["Data Scientist", ["data scientist", "research scientist", "applied scientist", "khoa học dữ liệu"]],
+      ["MLOps/DevOps", ["mlops", "devops engineer", "platform engineer", "cloud engineer", "site reliability", "sre"]],
+      ["Software Engineer", ["software engineer", "backend engineer", "frontend engineer", "fullstack", "full stack", "developer", "lập trình viên"]],
+      ["Manager/Lead", ["manager", "head of data", "head of ai", "director", "chief data", "tech lead", "data lead", "trưởng nhóm"]],
+      ["Database/DBA", ["dba", "database administrator", "database engineer", "sql developer"]],
+      ["Intern/Fresher", ["intern", "thực tập", "fresher", "trainee", "graduate"]]
+    ];
+    const SOFT_SKILLS = new Set(["communication", "teamwork", "leadership", "problem solving", "critical thinking", "time management", "agile", "scrum", "english", "presentation", "analytical", "microsoft office", "word", "excel", "powerpoint", "work", "ability", "experience", "knowledge", "skill", "team", "project", "management", "customer", "service"]);
+
+    let rows = [];
+
+    function parseCSV(text) {
+      const out = [];
+      let row = [], cell = "", quote = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i], n = text[i + 1];
+        if (c === '"' && quote && n === '"') { cell += '"'; i++; continue; }
+        if (c === '"') { quote = !quote; continue; }
+        if (c === "," && !quote) { row.push(cell); cell = ""; continue; }
+        if ((c === "\n" || c === "\r") && !quote) {
+          if (c === "\r" && n === "\n") i++;
+          row.push(cell); cell = "";
+          if (row.some(v => v !== "")) out.push(row);
+          row = [];
+          continue;
+        }
+        cell += c;
+      }
+      if (cell || row.length) { row.push(cell); out.push(row); }
+      const header = out.shift() || [];
+      return out.map(r => Object.fromEntries(header.map((h, i) => [h, r[i] ?? ""])));
+    }
+
+    function roleOf(title) {
+      const t = String(title || "").toLowerCase();
+      for (const [role, kws] of ROLE_MAP) if (kws.some(k => t.includes(k))) return role;
+      return "Khác";
+    }
+
+    function normalize(row) {
+      const salary = Number(row.salary_midpoint_usd || "");
+      const skills = String(row.skills_str || "")
+        .split(/[;,\n|]/)
+        .map(s => s.trim().toLowerCase().replace(/^["']|["']$/g, ""))
+        .filter(s => s.length > 2 && s.length < 40 && !SOFT_SKILLS.has(s));
+      return {
+        title: row.job_title || "",
+        company: row.company_name || "Không rõ",
+        city: row.location_normalized || row.location || "Khác",
+        source: row.source_website || "Không rõ",
+        level: row.experience_level_inferred || "unknown",
+        role: roleOf(row.job_title),
+        salary: Number.isFinite(salary) && salary > 0 && salary < 10000 ? salary : null,
+        skills
+      };
+    }
+
+    function countBy(data, field) {
+      const map = new Map();
+      data.forEach(r => map.set(r[field], (map.get(r[field]) || 0) + 1));
+      return [...map.entries()].sort((a, b) => b[1] - a[1]);
+    }
+
+    function skillCounts(data) {
+      const map = new Map();
+      data.forEach(r => r.skills.forEach(s => map.set(s, (map.get(s) || 0) + 1)));
+      return [...map.entries()].sort((a, b) => b[1] - a[1]);
+    }
+
+    function median(values) {
+      const v = values.filter(x => x !== null && Number.isFinite(x)).sort((a, b) => a - b);
+      if (!v.length) return null;
+      const mid = Math.floor(v.length / 2);
+      return v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2;
+    }
+
+    function fillSelect(id, values) {
+      const el = document.getElementById(id);
+      const selected = el.value || "__all";
+      el.innerHTML = `<option value="__all">Tất cả</option>` + values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
+      el.value = values.includes(selected) ? selected : "__all";
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
+    }
+
+    function filteredRows() {
+      const city = cityFilter.value, role = roleFilter.value, source = sourceFilter.value, level = levelFilter.value;
+      return rows.filter(r =>
+        (city === "__all" || r.city === city) &&
+        (role === "__all" || r.role === role) &&
+        (source === "__all" || r.source === source) &&
+        (level === "__all" || r.level === level)
+      );
+    }
+
+    function renderKpis(data) {
+      const salaryRows = data.filter(r => r.salary !== null);
+      const topSkill = skillCounts(data)[0]?.[0] || "-";
+      kpiJobs.textContent = data.length.toLocaleString("en-US");
+      kpiCompanies.textContent = new Set(data.map(r => r.company)).size.toLocaleString("en-US");
+      kpiCities.textContent = new Set(data.map(r => r.city)).size.toLocaleString("en-US");
+      const med = median(data.map(r => r.salary));
+      kpiSalary.textContent = med ? "$" + Math.round(med).toLocaleString("en-US") : "N/A";
+      kpiCoverage.textContent = data.length ? (100 * salaryRows.length / data.length).toFixed(1) + "%" : "0%";
+      kpiSkill.textContent = topSkill.length > 13 ? topSkill.slice(0, 13) + "..." : topSkill;
+    }
+
+    function svgBar(id, pairs, opts = {}) {
+      const svg = document.getElementById(id);
+      const width = svg.clientWidth || 600, height = svg.clientHeight || 300;
+      const margin = { top: 8, right: 24, bottom: 28, left: opts.left || 130 };
+      const chartW = width - margin.left - margin.right;
+      const rowH = Math.max(22, (height - margin.top - margin.bottom) / Math.max(pairs.length, 1));
+      const max = Math.max(...pairs.map(p => p[1]), 1);
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.innerHTML = "";
+      if (!pairs.length) {
+        svg.innerHTML = `<text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="#64748b">Không có dữ liệu</text>`;
+        return;
+      }
+      pairs.forEach((p, i) => {
+        const y = margin.top + i * rowH;
+        const barW = chartW * p[1] / max;
+        const color = COLORS[i % COLORS.length];
+        svg.insertAdjacentHTML("beforeend", `
+          <text class="bar-label" x="${margin.left - 8}" y="${y + rowH * .64}" text-anchor="end">${escapeHtml(shorten(p[0], opts.label || 20))}</text>
+          <rect x="${margin.left}" y="${y + 4}" width="${barW}" height="${Math.max(10, rowH - 8)}" rx="5" fill="${color}" opacity=".9"></rect>
+          <text class="bar-label" x="${margin.left + barW + 6}" y="${y + rowH * .64}">${p[1].toLocaleString("en-US")}</text>
+        `);
+      });
+    }
+
+    function svgDonut(id, pairs) {
+      const svg = document.getElementById(id);
+      const width = svg.clientWidth || 360, height = svg.clientHeight || 240;
+      const cx = width / 2, cy = height / 2 - 8, r = Math.min(width, height) * .28;
+      const total = pairs.reduce((s, p) => s + p[1], 0) || 1;
+      let angle = -Math.PI / 2;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.innerHTML = "";
+      pairs.slice(0, 6).forEach((p, i) => {
+        const next = angle + 2 * Math.PI * p[1] / total;
+        const large = next - angle > Math.PI ? 1 : 0;
+        const x1 = cx + r * Math.cos(angle), y1 = cy + r * Math.sin(angle);
+        const x2 = cx + r * Math.cos(next), y2 = cy + r * Math.sin(next);
+        const color = COLORS[i % COLORS.length];
+        svg.insertAdjacentHTML("beforeend", `
+          <path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${color}" opacity=".9"></path>
+        `);
+        angle = next;
+      });
+      svg.insertAdjacentHTML("beforeend", `<circle cx="${cx}" cy="${cy}" r="${r * .55}" fill="#fff"></circle>`);
+      const legend = pairs.slice(0, 4).map((p, i) => `${shorten(p[0], 12)} ${(100 * p[1] / total).toFixed(0)}%`).join(" · ");
+      svg.insertAdjacentHTML("beforeend", `<text x="${cx}" y="${height - 12}" text-anchor="middle" class="bar-label">${escapeHtml(legend)}</text>`);
+    }
+
+    function svgHistogram(id, values) {
+      const svg = document.getElementById(id);
+      const width = svg.clientWidth || 360, height = svg.clientHeight || 240;
+      const nums = values.filter(v => v !== null).sort((a, b) => a - b);
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.innerHTML = "";
+      if (!nums.length) {
+        svg.innerHTML = `<text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="#64748b">Không có dữ liệu lương</text>`;
+        return;
+      }
+      const bins = 12, min = nums[0], max = nums[nums.length - 1], step = Math.max((max - min) / bins, 1);
+      const counts = Array(bins).fill(0);
+      nums.forEach(v => counts[Math.min(bins - 1, Math.floor((v - min) / step))]++);
+      const m = { top: 16, right: 12, bottom: 24, left: 28 };
+      const w = width - m.left - m.right, h = height - m.top - m.bottom;
+      const cmax = Math.max(...counts, 1);
+      counts.forEach((c, i) => {
+        const bw = w / bins - 4, bh = h * c / cmax;
+        const x = m.left + i * (w / bins), y = m.top + h - bh;
+        svg.insertAdjacentHTML("beforeend", `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="#2563eb" opacity=".82"></rect>`);
+      });
+      svg.insertAdjacentHTML("beforeend", `<text x="${m.left}" y="${height - 6}" class="bar-label">$${Math.round(min)}</text><text x="${width - 12}" y="${height - 6}" class="bar-label" text-anchor="end">$${Math.round(max)}</text>`);
+    }
+
+    function shorten(value, max) {
+      value = String(value || "");
+      return value.length > max ? value.slice(0, max - 1) + "..." : value;
+    }
+
+    function render() {
+      const data = filteredRows();
+      renderKpis(data);
+      svgBar("roleChart", countBy(data, "role").slice(0, 9), { left: 120, label: 18 });
+      svgBar("cityChart", countBy(data, "city").slice(0, 9), { left: 125, label: 18 });
+      svgBar("skillChart", skillCounts(data).slice(0, 18), { left: 145, label: 22 });
+      svgDonut("sourceChart", countBy(data, "source").slice(0, 6));
+      svgHistogram("salaryChart", data.map(r => r.salary));
+      svgBar("levelChart", countBy(data, "level").slice(0, 7), { left: 90, label: 14 });
+      status.textContent = `Đang hiển thị ${data.length.toLocaleString("en-US")} / ${rows.length.toLocaleString("en-US")} tin tuyển dụng.`;
+    }
+
+    function init(rawRows) {
+      rows = rawRows.map(normalize);
+      fillSelect("cityFilter", countBy(rows, "city").slice(0, 30).map(x => x[0]));
+      fillSelect("roleFilter", countBy(rows, "role").map(x => x[0]));
+      fillSelect("sourceFilter", countBy(rows, "source").map(x => x[0]));
+      fillSelect("levelFilter", countBy(rows, "level").map(x => x[0]));
+      render();
+    }
+
+    ["cityFilter", "roleFilter", "sourceFilter", "levelFilter"].forEach(id => {
+      document.getElementById(id).addEventListener("change", render);
+    });
+
+    fetch(CSV_URL)
+      .then(r => {
+        if (!r.ok) throw new Error("CSV not available");
+        return r.text();
+      })
+      .then(text => init(parseCSV(text)))
+      .catch(() => {
+        status.innerHTML = "Không tự tải được CSV. Hãy chạy local server từ thư mục <strong>Project/</strong>: <code>python -m http.server 8000</code>, rồi mở <code>http://localhost:8000/outputs/dashboard/index.html</code>.";
+      });
+  </script>
+</body>
+</html>

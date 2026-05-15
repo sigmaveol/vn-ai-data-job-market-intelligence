@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment Variables
+.env
+
+# # Data
+# data/raw/
+# data/processed/
+# data/cleaned/
+
+# # Outputs
+# outputs/charts/
+# outputs/reports/
+# outputs/slides/
+# outputs/exports/
+
+# Models
+models/
+checkpoints/
+
+# Logs
+logs/
+*.log
+
+# Streamlit
+.streamlit/secrets.toml

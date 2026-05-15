@@ -1,0 +1,27 @@
+Nguyen Van A
+Data Analyst
+
+SUMMARY
+Data Analyst with 2 years of experience in reporting, dashboarding, and business data analysis.
+
+SKILLS
+Python, SQL, Pandas, NumPy, Power BI, Tableau, Excel, PostgreSQL, Machine Learning, Statistics, Git
+
+EXPERIENCE
+Data Analyst - ABC Technology
+2024 - Present
+- Built Power BI dashboards for sales and customer analytics.
+- Wrote SQL queries for data extraction, joins, CTEs, and monthly reporting.
+- Cleaned data with Python, Pandas, and Excel.
+- Supported A/B Testing and business performance tracking.
+
+PROJECTS
+Vietnam Job Market Dashboard
+- Built an interactive dashboard with Python, Streamlit, Plotly, and pandas.
+- Analyzed salary distribution, skill demand, company hiring, and geographic trends.
+
+EDUCATION
+Bachelor of Information Systems
+
+CERTIFICATIONS
+Google Data Analytics Certificate
