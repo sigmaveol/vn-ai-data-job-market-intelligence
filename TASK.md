@@ -1,56 +1,48 @@
 # TASKS.md
 
-# Active Tasks
+# Current Status
+
+Project is now in:
+
+```text
+Phase 8 - Final Deliverables & Packaging
+```
+
+---
 
 ## Repository Setup
-- [ ] Initialize repository
-- [ ] Configure .gitignore
-- [ ] Setup requirements.txt
+- [x] Initialize repository
+- [x] Configure .gitignore
+- [x] Setup requirements.txt
 
 ---
 
 ## Data Collection
-- [ ] Build ITviec crawler
-- [ ] Build TopCV crawler
-- [ ] Build TopDev crawler
-- [ ] Build VietnamWorks crawler
+- [x] Build ITviec crawler
+- [x] Build TopCV crawler
+- [x] Build TopDev crawler
+- [x] Build VietnamWorks crawler
+- [x] Build 123job/CareerViet collection support
 
 ---
 
 ## Dataset Validation
-- [ ] Check duplicate jobs
-- [ ] Validate salary formats
-- [ ] Validate locations
-- [ ] Validate URLs
+- [x] Check duplicate jobs
+- [x] Validate salary formats
+- [x] Validate locations
+- [x] Validate URLs
+- [x] Export processed dataset
 
 ---
 
 ## EDA
-- [ ] Salary distribution chart
-- [ ] Skill frequency chart
-- [ ] Company ranking chart
-- [ ] Hiring trend chart
-- [ ] Correlation heatmap
-- [ ] WordCloud
-
----
-
-## NLP
-- [x] Skill extraction pipeline
-- [x] TF-IDF keyword analysis
-- [x] Skill co-occurrence rankings
-- [ ] Topic modeling (out of scope for lightweight Phase 6)
-- [ ] Embedding clustering (out of scope for lightweight Phase 6)
-
----
-
-## Resume Analyzer
-- [x] Resume parser
-- [x] Skill matcher
-- [x] Similarity scoring
-- [x] Missing skill detection
-- [x] Resume Analyzer dashboard page
-- [x] Resume analysis CSV exports
+- [x] Salary distribution chart
+- [x] Skill frequency chart
+- [x] Company ranking chart
+- [x] Hiring trend chart
+- [x] Correlation heatmap
+- [x] WordCloud
+- [x] Business insight summaries
 
 ---
 
@@ -65,36 +57,27 @@
 - [x] CSV export functionality
 - [x] Optional PNG chart export functionality
 - [x] Static HTML dashboard
-- [x] Resume analyzer full page
+- [x] Final UI polish
 
 ---
 
-## Phase 7 - Production Platform
-- [x] Production configuration system
-- [x] `.env.example` template
-- [x] Streamlit secrets template
-- [x] OAuth-ready login flow
-- [x] Google OAuth configuration support
-- [x] Optional GitHub OAuth configuration support
-- [x] Role-based access control
-- [x] Viewer/Analyst/Admin role model
-- [x] Page-level protection for analyst tools
-- [x] AI Agent automation workflow
-- [x] Automated schema profiling
-- [x] Automated data cleaning pipeline
-- [x] KPI and chart recommendations
-- [x] Insight generation
-- [x] Report and slide outline generation
-- [x] Workflow export buttons
-- [x] Render deployment config
-- [x] Deployment documentation
-- [ ] Public production URL (requires external hosting account)
-- [ ] OAuth end-to-end test with real provider credentials
+## NLP & Resume Analyzer
+- [x] Skill extraction pipeline
+- [x] TF-IDF keyword analysis
+- [x] Skill co-occurrence rankings
+- [x] Resume parser
+- [x] Skill matcher
+- [x] Similarity scoring
+- [x] Missing skill detection
+- [x] Resume Analyzer dashboard page
 
 ---
 
-## Final Deliverables
-- [ ] Report DOCX
-- [ ] Report PDF
-- [ ] Slides PPTX
+## Phase 8 - Final Deliverables
+- [ ] Final report DOCX
+- [ ] Final report PDF
+- [x] Slides PPTX draft/generated
+- [ ] Dashboard screenshots for report/slides
+- [ ] Final README check
+- [ ] Source code cleanup
 - [ ] Final ZIP submission
