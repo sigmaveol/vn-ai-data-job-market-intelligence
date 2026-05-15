@@ -45,7 +45,7 @@ with col1:
     co_vc = df['company_name'].value_counts().head(15).reset_index()
     co_vc.columns = ['Công ty', 'Số tin']
     fig = hbar(co_vc, 'Số tin', 'Công ty', height=440, color=C['accent'])
-    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig, "company_top_hiring.png", key="company_top_png")
 
 with col2:
@@ -53,13 +53,13 @@ with col2:
     r_counts = df['is_remote'].value_counts()
     labels = ['Remote' if k else 'Onsite' for k in r_counts.index]
     fig2 = pie_donut(labels, r_counts.values.tolist(), height=240)
-    st.plotly_chart(fig2, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig2, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig2, "company_remote_onsite.png", key="company_remote_png")
 
     st.markdown("**Phân Bổ Theo Nguồn**")
     src_vc = df['source_website'].value_counts()
     fig3 = pie_donut(src_vc.index.tolist(), src_vc.values.tolist(), height=240)
-    st.plotly_chart(fig3, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig3, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig3, "company_sources.png", key="company_sources_png")
 
 # ── Role specialization by top companies ──────────────────────────────────────
@@ -79,7 +79,7 @@ if not pivot.empty:
         legend_title='Vai trò',
         barmode='stack',
     )
-    st.plotly_chart(fig4, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig4, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig4, "company_role_specialization.png", key="company_roles_png")
 
 with st.expander("📥 Export danh sách công ty"):

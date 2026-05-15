@@ -15,7 +15,7 @@ The implementation remains demo-friendly and avoids enterprise over-engineering.
 ### Production Configuration
 
 ```text
-.env.example
+.env
 .streamlit/secrets.example.toml
 src/platform/settings.py
 src/platform/logging_config.py

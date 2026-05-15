@@ -66,7 +66,7 @@ fig.add_hline(y=mean_val, line_dash='dash', line_color=C['muted'],
               annotation_position='right', annotation_font_color=C['muted'])
 fig.update_layout(**PLOTLY_LAYOUT, height=320,
                   xaxis_title='Tháng', yaxis_title='Số tin đăng')
-st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
+st.plotly_chart(fig, width='stretch', config=PLOTLY_CONFIG)
 render_chart_download(fig, "timeseries_monthly_trend.png", key="time_monthly_png")
 
 # ── Trend by role ──────────────────────────────────────────────────────────────
@@ -92,7 +92,7 @@ if not pivot.empty:
     fig2.update_layout(**PLOTLY_LAYOUT, height=360,
                        xaxis_title='Tháng', yaxis_title='Số tin đăng',
                        showlegend=True)
-    st.plotly_chart(fig2, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig2, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig2, "timeseries_role_trend.png", key="time_roles_png")
 
 # ── Day-of-week pattern ────────────────────────────────────────────────────────
@@ -103,7 +103,7 @@ if df_dated['_dow'].notna().sum() > 50:
     dow_vc = df_dated['_dow'].value_counts().sort_index()
     dow_df = pd.DataFrame({'Ngày': [dow_map[i] for i in dow_vc.index], 'Số tin': dow_vc.values})
     fig3 = vbar(dow_df, 'Ngày', 'Số tin', height=280, color=C['purple'])
-    st.plotly_chart(fig3, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig3, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig3, "timeseries_day_of_week.png", key="time_dow_png")
 
 with st.expander("📥 Export dữ liệu xu hướng"):

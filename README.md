@@ -30,8 +30,6 @@ A Data Analysis and Visualization project focused on the Vietnamese AI/Data recr
 ## Production Platform Enhancements
 - OAuth-ready authentication
 - Role-based access control
-- AI Agent automation workflow
-- Automated dataset profiling and dashboard planning
 - Deployment configuration for Streamlit Cloud and Render
 
 ---
@@ -71,7 +69,6 @@ Project/
 |-- data/
 |-- notebooks/
 |-- src/
-|   |-- agent/
 |   |-- analysis/
 |   |-- auth/
 |   |-- crawler/
@@ -139,11 +136,7 @@ streamlit run app.py
 
 ## Production Configuration
 
-Copy `.env.example` to `.env` for local production-style settings:
-
-```bash
-cp .env.example .env
-```
+Use the existing `.env` file for local production-style settings. The runtime loads this file directly.
 
 Important variables:
 

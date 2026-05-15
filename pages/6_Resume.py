@@ -158,7 +158,7 @@ with viz_col:
         margin=dict(t=30, b=30, l=30, r=30),
     )
     radar.update_layout(**radar_layout)
-    st.plotly_chart(radar, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(radar, width='stretch', config=PLOTLY_CONFIG)
 
     st.markdown("### Breakdown")
     for label, value in [
@@ -211,7 +211,7 @@ with tab2:
     if skills_df.empty:
         st.info("Không có kỹ năng để hiển thị.")
     else:
-        st.dataframe(skills_df, use_container_width=True, hide_index=True)
+        st.dataframe(skills_df, width='stretch', hide_index=True)
 
 with tab3:
     st.markdown("### Sections parser")

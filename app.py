@@ -73,14 +73,14 @@ with col1:
     rc = df['role_category'].value_counts().head(10).reset_index()
     rc.columns = ['Vai trò', 'Số tin']
     fig = hbar(rc, 'Số tin', 'Vai trò', height=360)
-    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig, "overview_roles.png", key="overview_roles_png")
 
 with col2:
     st.markdown("**Nguồn Tuyển Dụng**")
     src = df['source_website'].value_counts()
     fig2 = pie_donut(src.index.tolist(), src.values.tolist(), height=360)
-    st.plotly_chart(fig2, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig2, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig2, "overview_sources.png", key="overview_sources_png")
 
 # ── Charts row 2 ───────────────────────────────────────────────────────────────
@@ -93,7 +93,7 @@ with col3:
     others  = [(e, int(v)) for e, v in exp_vc.items() if e not in EXP_ORDER]
     exp_df  = pd.DataFrame(ordered + others, columns=['Cấp độ', 'Số tin'])
     fig3 = vbar(exp_df, 'Cấp độ', 'Số tin', height=300)
-    st.plotly_chart(fig3, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig3, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig3, "overview_experience.png", key="overview_experience_png")
 
 with col4:
@@ -101,7 +101,7 @@ with col4:
     city_vc = df['city'].value_counts().head(10).reset_index()
     city_vc.columns = ['Thành phố', 'Số tin']
     fig4 = hbar(city_vc, 'Số tin', 'Thành phố', height=300, color=C['blue'])
-    st.plotly_chart(fig4, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig4, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig4, "overview_cities.png", key="overview_cities_png")
 
 # ── Charts row 3 ───────────────────────────────────────────────────────────────
@@ -112,7 +112,7 @@ with col5:
     if len(df_sal):
         fig5 = histogram_chart(df_sal['salary_midpoint_usd'], height=320, color=C['accent'])
         fig5.update_layout(xaxis_title="USD/tháng", yaxis_title="Số tin")
-        st.plotly_chart(fig5, use_container_width=True, config=PLOTLY_CONFIG)
+        st.plotly_chart(fig5, width='stretch', config=PLOTLY_CONFIG)
         render_chart_download(fig5, "overview_salary_distribution.png", key="overview_salary_png")
     else:
         st.info("Bộ lọc hiện tại không có tin công bố lương.")
@@ -123,7 +123,7 @@ with col6:
     if not skill_df.empty:
         fig6 = hbar(skill_df, 'Số lần', 'Kỹ năng', height=320, color=C['green'])
         fig6.update_layout(xaxis_title="Số lần xuất hiện")
-        st.plotly_chart(fig6, use_container_width=True, config=PLOTLY_CONFIG)
+        st.plotly_chart(fig6, width='stretch', config=PLOTLY_CONFIG)
         render_chart_download(fig6, "overview_top_skills.png", key="overview_skills_png")
     else:
         st.info("Bộ lọc hiện tại không có dữ liệu kỹ năng.")

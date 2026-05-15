@@ -53,7 +53,7 @@ def render_sidebar():
 
         st.divider()
 
-        if st.button('Xóa bộ lọc', use_container_width=True):
+        if st.button('Xóa bộ lọc', width='stretch'):
             for k in ['f_cities','f_roles','f_exps','f_srcs','f_remote','f_sal']:
                 if k in st.session_state:
                     del st.session_state[k]

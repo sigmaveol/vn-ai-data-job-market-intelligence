@@ -49,7 +49,7 @@ with col1:
     top12 = df['city'].value_counts().head(12).reset_index()
     top12.columns = ['Thành phố', 'Số tin']
     fig = hbar(top12, 'Số tin', 'Thành phố', height=380, color=C['blue'])
-    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig, "geographic_city_distribution.png", key="geo_city_png")
 
 with col2:
@@ -59,7 +59,7 @@ with col2:
     labels = top5.index.tolist() + ['Khác']
     values = top5.values.tolist() + [int(other_sum)]
     fig2 = pie_donut(labels, values, height=380)
-    st.plotly_chart(fig2, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig2, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig2, "geographic_region_share.png", key="geo_region_png")
 
 # ── HCM vs Hanoi comparison ───────────────────────────────────────────────────
@@ -85,7 +85,7 @@ if len(df_hcm) > 10 and len(df_hn) > 10:
             height=320
         )
         fig3.update_layout(xaxis_tickangle=-30, legend_title='')
-        st.plotly_chart(fig3, use_container_width=True, config=PLOTLY_CONFIG)
+        st.plotly_chart(fig3, width='stretch', config=PLOTLY_CONFIG)
         render_chart_download(fig3, "geographic_hcm_hanoi_roles.png", key="geo_roles_png")
 
     with col4:
@@ -102,7 +102,7 @@ if len(df_hcm) > 10 and len(df_hn) > 10:
                 height=320
             )
             fig4.update_layout(xaxis_tickangle=-30, legend_title='', yaxis_title='USD/tháng')
-            st.plotly_chart(fig4, use_container_width=True, config=PLOTLY_CONFIG)
+            st.plotly_chart(fig4, width='stretch', config=PLOTLY_CONFIG)
             render_chart_download(fig4, "geographic_hcm_hanoi_salary.png", key="geo_salary_compare_png")
         else:
             st.info("Không đủ dữ liệu lương để so sánh.")
@@ -118,7 +118,7 @@ if len(df_sal) > 10:
                 .median().sort_values(ascending=False).reset_index())
     city_sal.columns = ['Thành phố', 'Lương trung vị (USD)']
     fig5 = hbar(city_sal, 'Lương trung vị (USD)', 'Thành phố', height=320, color=C['orange'])
-    st.plotly_chart(fig5, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig5, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig5, "geographic_salary_by_city.png", key="geo_salary_city_png")
 
 with st.expander("📥 Export dữ liệu địa lý"):

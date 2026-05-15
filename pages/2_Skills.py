@@ -48,7 +48,7 @@ with col1:
     sk_df = pd.DataFrame(top20, columns=['Kỹ năng', 'Tần suất'])
     fig = hbar(sk_df, 'Tần suất', 'Kỹ năng', height=480, color=C['green'])
     fig.update_layout(xaxis_title="Số tin xuất hiện")
-    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig, "skills_frequency.png", key="skills_frequency_png")
 
 with col2:
@@ -59,7 +59,7 @@ with col2:
             columns={'skill': 'Kỹ năng', 'median_salary': 'Lương trung vị (USD)'})
         fig2 = hbar(hp_plot, 'Lương trung vị (USD)', 'Kỹ năng', height=480, color=C['orange'])
         fig2.update_layout(xaxis_title="USD/tháng (trung vị)")
-        st.plotly_chart(fig2, use_container_width=True, config=PLOTLY_CONFIG)
+        st.plotly_chart(fig2, width='stretch', config=PLOTLY_CONFIG)
         render_chart_download(fig2, "skills_salary.png", key="skills_salary_png")
     else:
         st.info("Không đủ dữ liệu lương.")
@@ -74,7 +74,7 @@ try:
             xaxis_title="Vai trò",
             yaxis_title="Kỹ năng",
         )
-        st.plotly_chart(fig3, use_container_width=True, config=PLOTLY_CONFIG)
+        st.plotly_chart(fig3, width='stretch', config=PLOTLY_CONFIG)
         render_chart_download(fig3, "skills_role_heatmap.png", key="skills_heatmap_png")
 except Exception as e:
     st.warning(f"Không thể render heatmap: {e}")
@@ -107,7 +107,7 @@ with nlp_col1:
             color=C['blue'],
             text_fmt='.3f',
         )
-        st.plotly_chart(fig4, use_container_width=True, config=PLOTLY_CONFIG)
+        st.plotly_chart(fig4, width='stretch', config=PLOTLY_CONFIG)
     else:
         st.info("Không đủ dữ liệu để trích xuất keyword.")
 
@@ -124,7 +124,7 @@ with nlp_col2:
             height=380,
             color=C['purple'],
         )
-        st.plotly_chart(fig5, use_container_width=True, config=PLOTLY_CONFIG)
+        st.plotly_chart(fig5, width='stretch', config=PLOTLY_CONFIG)
     else:
         st.info("Không đủ dữ liệu để tính co-occurrence.")
 

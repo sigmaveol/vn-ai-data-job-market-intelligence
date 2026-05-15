@@ -65,7 +65,7 @@ with col1:
                           text=f" Trung vị ${df_sal['salary_midpoint_usd'].median():,.0f}",
                           showarrow=False, font_color=C['green'], xanchor='left')]
     )
-    st.plotly_chart(fig, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig, "salary_distribution.png", key="salary_distribution_png")
 
 with col2:
@@ -73,7 +73,7 @@ with col2:
     fig2 = boxplot_chart(df_sal, 'experience_level_inferred', 'salary_midpoint_usd',
                          height=320, order=EXP_ORDER)
     fig2.update_layout(yaxis_title="USD/tháng", xaxis_title="")
-    st.plotly_chart(fig2, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig2, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig2, "salary_by_experience.png", key="salary_experience_png")
 
 # ── Row 2: salary by role + salary by city ────────────────────────────────────
@@ -87,7 +87,7 @@ with col3:
     role_sal['Lương trung vị (USD)'] = role_sal['Lương trung vị (USD)'].round(0)
     fig3 = hbar(role_sal, 'Lương trung vị (USD)', 'Vai trò', height=340, color=C['accent'])
     fig3.update_layout(xaxis_title="USD/tháng")
-    st.plotly_chart(fig3, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig3, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig3, "salary_by_role.png", key="salary_role_png")
 
 with col4:
@@ -100,7 +100,7 @@ with col4:
     city_sal.columns = ['Thành phố', 'Lương trung vị (USD)', 'Số mẫu']
     fig4 = hbar(city_sal, 'Lương trung vị (USD)', 'Thành phố', height=340, color=C['orange'])
     fig4.update_layout(xaxis_title="USD/tháng")
-    st.plotly_chart(fig4, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig4, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig4, "salary_by_city.png", key="salary_city_png")
 
 # ── Row 3: top-paying skills ───────────────────────────────────────────────────
@@ -110,7 +110,7 @@ if not hp.empty:
     hp_plot = hp[['skill', 'median_salary']].rename(columns={'skill': 'Kỹ năng', 'median_salary': 'Lương trung vị (USD)'})
     fig5 = hbar(hp_plot, 'Lương trung vị (USD)', 'Kỹ năng', height=400, color=C['green'])
     fig5.update_layout(xaxis_title="USD/tháng")
-    st.plotly_chart(fig5, use_container_width=True, config=PLOTLY_CONFIG)
+    st.plotly_chart(fig5, width='stretch', config=PLOTLY_CONFIG)
     render_chart_download(fig5, "salary_high_paying_skills.png", key="salary_skills_png")
 else:
     st.info("Không đủ dữ liệu để tính lương theo kỹ năng.")
